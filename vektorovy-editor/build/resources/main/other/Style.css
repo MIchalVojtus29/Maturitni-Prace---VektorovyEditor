@@ -1,0 +1,12 @@
+/*
+.button {
+   -fx-background-color: red;
+   -fx-text-fill: white;
+}
+*/
+.root{
+    -fx-background-color: #cccccc;
+}
+.vector-scene{
+    -fx-background-color: #FFFFFF;
+}

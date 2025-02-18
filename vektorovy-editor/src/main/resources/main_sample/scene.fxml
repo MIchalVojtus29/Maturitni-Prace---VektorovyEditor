@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import controller_components.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="b" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1434.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main_sample.Controller">
+
+
+   <!-- horní lišta, zde najdeme ukládání do souborů-->
+   <top>
+      <MenuBar prefHeight="45.0" prefWidth="1365.0" styleClass="top" BorderPane.alignment="CENTER">
+         <menus>
+            <Menu mnemonicParsing="false" text="Soubor">
+               <items>
+                  <MenuItem fx:id="menuItemSave" mnemonicParsing="false" onAction="#save" text="Uložit" />
+                  <MenuItem fx:id="menuItemQuit" mnemonicParsing="false" onAction="#quit" text="Zavřít" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </top>
+
+
+   <!-- Spodní lišta s úpravy tvarů, které se hodláme nakreslit -->
+   <bottom>
+      <HBox fx:id="hboxBottom" prefHeight="45.0" prefWidth="1365.0" styleClass="bottom" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="labelAction" alignment="CENTER" prefHeight="45.0" prefWidth="150.0" styleClass="big-text" text="Režim: Interakce" />
+            <Label alignment="CENTER" prefHeight="45.0" prefWidth="100.0" styleClass="big-text" text="Barva Výplně" textAlignment="CENTER" />
+            <ColorPicker fx:id="colorPickerFill" prefHeight="63.0" prefWidth="50.0" />
+            <Label alignment="CENTER" prefHeight="45.0" prefWidth="100.0" styleClass="big-text" text="Barva Okrajů" />
+            <ColorPicker fx:id="colorPickerStroke" prefHeight="68.0" prefWidth="50.0" />
+            <Label alignment="CENTER" prefHeight="45.0" prefWidth="140.0" styleClass="big-text" text="Šířka Okrajů" />
+            <Spinner fx:id="spinnerStrokeWidth" editable="false" prefHeight="45.0" prefWidth="85.0" />
+            <Label alignment="CENTER" prefHeight="45.0" prefWidth="140.0" styleClass="big-text" text="Vrstva" />
+            <Spinner fx:id="spinnerCurrentLayer" prefHeight="45.0" prefWidth="85.0" />
+            <Label alignment="CENTER" prefHeight="45.0" prefWidth="150.0" styleClass="big-text" text="Přicvaknutí" />
+            <CheckBox fx:id="checkboxSnappingStart" maxHeight="45.0" maxWidth="60.0" mnemonicParsing="false" onAction="#changeSnappingStart" prefHeight="45.0" prefWidth="60.0" />
+         </children>
+      </HBox>
+   </bottom>
+
+
+   <!-- Levá lišta s výběrem tvarů, které chceme nakreslit a také s režimy (výběr, posun, úprava, smazání a duplikace)-->
+   <left>
+      <VBox fx:id="vboxLeft" prefHeight="710.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="buttonActionInteract" mnemonicParsing="false" onAction="#switchActionInteract" prefHeight="23.0" prefWidth="64.0" text="Vybrat">
+               <font>
+                  <Font size="10.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin></Button>
+            <Button fx:id="buttonActionMove" mnemonicParsing="false" onAction="#switchActionMove" prefHeight="23.0" prefWidth="64.0" text="Posunout">
+               <font>
+                  <Font size="10.0" />
+               </font></Button>
+            <Button fx:id="buttonAdjust" mnemonicParsing="false" onAction="#switchActionAdjust" prefHeight="23.0" prefWidth="64.0" text="Upravit">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#switchActionDelete" prefHeight="23.0" prefWidth="64.0" text="Smazat">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonDuplicate" mnemonicParsing="false" onAction="#switchActionDuplicate" prefHeight="23.0" prefWidth="64.0" text="Duplikovat">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
+               <VBox prefHeight="200.0" prefWidth="100.0">
+                  <children>
+                     <Button fx:id="buttonActionLine" mnemonicParsing="false" onAction="#switchActionLine" prefHeight="23.0" prefWidth="64.0" text="Čára">
+                        <font>
+                           <Font size="10.0" />
+                        </font>
+                     </Button>
+                     <Button fx:id="buttonActionCircle" mnemonicParsing="false" onAction="#switchActionCircle" prefHeight="23.0" prefWidth="64.0" text="Kruh">
+                        <font>
+                           <Font size="10.0" />
+                        </font>
+                     </Button>
+                     <Button fx:id="buttonActionRectangle" mnemonicParsing="false" onAction="#switchActionRectangle" prefHeight="23.0" prefWidth="64.0" text="Obdélník">
+                        <font>
+                           <Font size="10.0" />
+                        </font>
+                     </Button>
+                     <Button fx:id="buttonActionEllipse" mnemonicParsing="false" onAction="#switchActionEllipse" prefHeight="23.0" prefWidth="64.0" text="Elipsa">
+                        <font>
+                           <Font size="10.0" />
+                        </font>
+                     </Button>
+                     <Button fx:id="buttonActionPoint" mnemonicParsing="false" onAction="#switchActionPoint" prefHeight="23.0" prefWidth="64.0" text="Bod">
+                        <font>
+                           <Font size="10.0" />
+                        </font>
+                     </Button>
+                  </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+               </VBox>
+            </children>
+         </VBox>
+      </left>
+
+
+   <!-- Plátno :) -->
+      <center>
+         <ControllerScene fx:id="scene" maxHeight="1080.0" maxWidth="1920.0" prefHeight="720.0" prefWidth="1024.0" styleClass="vector-scene" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="30.0" />
+         </BorderPane.margin></ControllerScene>
+      </center>
+
+
+   <!-- Pravá lišta, na které můžeme najít úpravy jižn nakreslených tvarů, které sme vybrali pomocí režimu "Vybrat" -->
+      <right>
+         <ControllerInfo fx:id="paneRight" maxWidth="240.0" prefHeight="200.0" prefWidth="230.0" BorderPane.alignment="CENTER">
+            <children>
+               <Label alignment="CENTER" maxWidth="240.0" prefHeight="30.0" prefWidth="240.0" styleClass="big-text" text="Vybraný Tvar" />
+               <HBox prefHeight="30.0" prefWidth="240.0">
+                  <children>
+                     <Label alignment="CENTER" prefHeight="30.0" prefWidth="80.0" text="Start X">
+                        <HBox.margin>
+                           <Insets left="15.0" />
+                        </HBox.margin>
+                     </Label>
+                     <TextField fx:id="tfStartX" maxWidth="120.0" prefHeight="30.0" prefWidth="120.0">
+                        <HBox.margin>
+                           <Insets right="20.0" />
+                        </HBox.margin>
+                        <padding>
+                           <Insets right="20.0" />
+                        </padding>
+                     </TextField>
+                  </children>
+                  <VBox.margin>
+                     <Insets top="5.0" />
+                  </VBox.margin>
+               </HBox>
+               <HBox prefHeight="30.0" prefWidth="240.0">
+                  <children>
+                     <Label alignment="CENTER" prefHeight="30.0" prefWidth="80.0" text="Start Y">
+                        <HBox.margin>
+                           <Insets left="15.0" />
+                        </HBox.margin>
+                     </Label>
+                     <TextField fx:id="tfStartY" maxWidth="120.0" prefHeight="30.0" prefWidth="120.0">
+                        <HBox.margin>
+                           <Insets right="20.0" />
+                        </HBox.margin>
+                        <padding>
+                           <Insets right="20.0" />
+                        </padding>
+                     </TextField>
+                  </children>
+                  <VBox.margin>
+                     <Insets top="5.0" />
+                  </VBox.margin>
+               </HBox>
+               <HBox prefHeight="30.0" prefWidth="240.0">
+                  <children>
+                     <Label alignment="CENTER" prefHeight="44.0" prefWidth="80.0" text="Průlednost">
+                        <HBox.margin>
+                           <Insets left="15.0" />
+                        </HBox.margin>
+                     </Label>
+                     <Slider fx:id="sliderOpacity" blockIncrement="0.05" majorTickUnit="0.5" max="1.0" maxWidth="120.0" minorTickCount="0" prefWidth="120.0" showTickLabels="true" showTickMarks="true" value="1.0" />
+                  </children>
+                  <VBox.margin>
+                     <Insets top="5.0" />
+                  </VBox.margin>
+               </HBox>
+               <HBox prefHeight="30.0" prefWidth="240.0">
+                  <children>
+                     <Label alignment="CENTER" prefHeight="30.0" prefWidth="80.0" text="Šířka Okrajů">
+                        <HBox.margin>
+                           <Insets left="15.0" />
+                        </HBox.margin>
+                     </Label>
+                     <TextField fx:id="tfLineWidth" maxWidth="120.0" prefHeight="30.0" prefWidth="120.0">
+                        <padding>
+                           <Insets right="20.0" />
+                        </padding>
+                     </TextField>
+                  </children>
+                  <VBox.margin>
+                     <Insets top="5.0" />
+                  </VBox.margin>
+               </HBox>
+               <HBox prefHeight="30.0" prefWidth="240.0">
+                  <children>
+                     <Label alignment="CENTER" prefHeight="30.0" prefWidth="80.0" text="Barva Výplně">
+                        <HBox.margin>
+                           <Insets left="15.0" />
+                        </HBox.margin>
+                     </Label>
+                     <ColorPicker fx:id="colorPickerShapeColor" maxWidth="120.0" prefHeight="30.0" prefWidth="120.0" />
+                  </children>
+                  <VBox.margin>
+                     <Insets top="5.0" />
+                  </VBox.margin>
+               </HBox>
+               <HBox prefHeight="30.0" prefWidth="240.0">
+                  <children>
+                     <Label fx:id="colorPickerShapeColor1" alignment="CENTER" prefHeight="30.0" prefWidth="80.0" text="Barva Okrajů">
+                        <HBox.margin>
+                           <Insets left="15.0" />
+                        </HBox.margin>
+                     </Label>
+                     <ColorPicker fx:id="colorPickerStrokeColor" maxWidth="120.0" prefHeight="30.0" prefWidth="120.0" />
+                  </children>
+                  <VBox.margin>
+                     <Insets top="5.0" />
+                  </VBox.margin>
+               </HBox>
+               <HBox prefHeight="30.0" prefWidth="240.0">
+                  <children>
+                     <Label alignment="CENTER" prefHeight="30.0" prefWidth="80.0" text="Vrstva">
+                        <HBox.margin>
+                           <Insets left="15.0" />
+                        </HBox.margin>
+                     </Label>
+                     <Spinner fx:id="spinnerShapeLayer" maxWidth="120.0" prefHeight="30.0" prefWidth="120.0" />
+                  </children>
+                  <VBox.margin>
+                     <Insets top="5.0" />
+                  </VBox.margin>
+               </HBox>
+               <HBox prefHeight="30.0" prefWidth="240.0">
+                  <children>
+                     <Label alignment="CENTER" prefHeight="30.0" prefWidth="80.0" text="Rotace">
+                        <HBox.margin>
+                           <Insets left="15.0" />
+                        </HBox.margin>
+                     </Label>
+                     <TextField fx:id="tfRotation" maxWidth="120.0" prefHeight="30.0" prefWidth="120.0">
+                        <HBox.margin>
+                           <Insets right="20.0" />
+                        </HBox.margin>
+                        <padding>
+                           <Insets right="20.0" />
+                        </padding>
+                     </TextField>
+                  </children>
+                  <VBox.margin>
+                     <Insets top="5.0" />
+                  </VBox.margin>
+               </HBox>
+               <Label alignment="CENTER" maxWidth="240.0" prefHeight="30.0" prefWidth="240.0" styleClass="big-text" text="Body">
+                  <VBox.margin>
+                     <Insets top="20.0" />
+                  </VBox.margin>
+               </Label>
+               <TextArea fx:id="textAreaPointMatrix" prefHeight="200.0" prefWidth="180.0" />
+               <HBox prefHeight="35.0" prefWidth="240.0">
+                  <children>
+                     <Button fx:id="buttonPolygon" mnemonicParsing="false" onAction="#createPolygon" prefHeight="40.0" prefWidth="240.0" text="Mnohoúhelník" />
+                  </children>
+               </HBox>
+               <HBox prefHeight="30.0" prefWidth="240.0">
+                  <children>
+                     <Button fx:id="buttonClearLastMatrix" mnemonicParsing="false" onAction="#clearLastMatrix" prefHeight="40.0" prefWidth="139.0" text="Smazat Poslední" />
+                     <Button fx:id="buttonClearAllMatrix" mnemonicParsing="false" onAction="#clearAllMatrix" prefHeight="40.0" prefWidth="137.0" text="Smazat Vše" />
+                  </children></HBox>
+               <HBox maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="240.0">
+                  <children>
+                     <Label alignment="CENTER" maxHeight="25.0" prefHeight="25.0" prefWidth="120.0" styleClass="big-text" text="Viditelnost Bodů" />
+                     <CheckBox fx:id="checkboxShowPolygonPoints" alignment="CENTER" contentDisplay="CENTER" maxHeight="25.0" mnemonicParsing="false" onAction="#changePolygonPointsVisibility" prefHeight="25.0" prefWidth="25.0">
+                        <HBox.margin>
+                           <Insets />
+                        </HBox.margin>
+                     </CheckBox>
+                     <ColorPicker fx:id="colorPickerPolygonPoints" maxHeight="25.0" prefHeight="25.0" prefWidth="50.0">
+                        <HBox.margin>
+                           <Insets left="21.0" />
+                        </HBox.margin>
+                     </ColorPicker>
+                  </children>
+               </HBox>
+            </children>
+         </ControllerInfo>
+      </right>
+
+   </BorderPane>

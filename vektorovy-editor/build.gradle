@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+}
+
+group 'org'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+}
+
+sourceCompatibility = 16
+
+javafx {
+    version = "16"
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.swing' ]
+}
+
+mainClassName = "main_sample.Main"
+
+compileJava {
+    options.encoding("UTF-8")
+}
